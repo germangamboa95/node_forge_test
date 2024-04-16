@@ -9,6 +9,7 @@ collectDefaultMetrics({ register });
 
 const cc = new client.Counter({
   name: "home hits",
+  help: "this is a counter",
   labelNames: ["home_hits"],
 });
 
