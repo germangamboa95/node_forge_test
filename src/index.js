@@ -4,7 +4,10 @@ import express from "express";
 const app = express();
 
 app.get("/", (_, res) => {
-  return res.json({ message: "hello world" });
+  return res.json({
+    message: "hello world",
+    addition: "I was added to test deployments",
+  });
 });
 
 app.listen(process.env.PORT, (_) => {
