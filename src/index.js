@@ -1,16 +1,21 @@
 import "dotenv/config";
 import express from "express";
-import client from "prom-client";
+import client, { Counter } from "prom-client";
 
 const collectDefaultMetrics = client.collectDefaultMetrics;
 const Registry = client.Registry;
 const register = new Registry();
+
+register.setDefaultLabels({
+  service: "test_api",
+});
 collectDefaultMetrics({ register });
 
-const cc = new client.Counter({
+const cc = new Counter({
   name: "home_hits",
   help: "this is a counter",
   labelNames: ["home_hits"],
+  register,
 });
 
 const app = express();
@@ -24,10 +29,10 @@ app.get("/", (_, res) => {
 });
 
 app.get("/metrics", async (req, res) => {
-  res.set("Content-Type", client.register.contentType);
+  res.set("Content-Type", register.contentType);
 
-  console.log(await client.register.metrics());
-  res.end(await client.register.metrics());
+  console.log(await register.metrics());
+  res.end(await register.metrics());
 });
 
 app.listen(process.env.PORT, (_) => {
