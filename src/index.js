@@ -15,7 +15,7 @@ const cc = new Counter({
   name: "home_hits",
   help: "this is a counter",
   labelNames: ["home_hits"],
-  register,
+  registers: [register],
 });
 
 const app = express();
