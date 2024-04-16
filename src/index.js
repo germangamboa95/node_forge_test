@@ -17,8 +17,8 @@ app.get("/", (_, res) => {
 });
 
 app.get("/metrics", (req, res) => {
-  res.set("Content-Type", Prometheus.register.contentType);
-  res.end(Prometheus.register.metrics());
+  res.set("Content-Type", client.register.contentType);
+  res.end(client.register.metrics());
 });
 
 app.listen(process.env.PORT, (_) => {
