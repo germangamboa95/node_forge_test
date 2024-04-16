@@ -8,7 +8,7 @@ const register = new Registry();
 collectDefaultMetrics({ register });
 
 const cc = new client.Counter({
-  name: "home hits",
+  name: "home_hits",
   help: "this is a counter",
   labelNames: ["home_hits"],
 });
