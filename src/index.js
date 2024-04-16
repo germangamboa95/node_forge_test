@@ -7,9 +7,15 @@ const Registry = client.Registry;
 const register = new Registry();
 collectDefaultMetrics({ register });
 
+const cc = new client.Counter({
+  name: "home hits",
+  labelNames: ["home_hits"],
+});
+
 const app = express();
 
 app.get("/", (_, res) => {
+  cc.inc();
   return res.json({
     message: "hello world",
     addition: "I was added to test deployments",
@@ -18,6 +24,8 @@ app.get("/", (_, res) => {
 
 app.get("/metrics", async (req, res) => {
   res.set("Content-Type", client.register.contentType);
+
+  console.log(await client.register.metrics());
   res.end(await client.register.metrics());
 });
 
